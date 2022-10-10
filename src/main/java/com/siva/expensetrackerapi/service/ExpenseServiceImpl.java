@@ -6,6 +6,8 @@ import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.siva.expensetrackerapi.entity.Expense;
@@ -17,10 +19,11 @@ public class ExpenseServiceImpl implements ExpenseService{
 	@Autowired
 	private ExpenseRepository expenseRepo;
 	
-	@Override
-	public List<Expense> getAllExpenses() {
 	
-		return expenseRepo.findAll();
+	/*    Pagination   */ 
+	@Override
+	public Page<Expense> getAllExpenses(Pageable page) {
+		return expenseRepo.findAll(page);
 	}
 
 	@Override

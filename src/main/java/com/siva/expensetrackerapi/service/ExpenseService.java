@@ -1,12 +1,14 @@
 package com.siva.expensetrackerapi.service;
 
-import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.siva.expensetrackerapi.entity.Expense;
 
 public interface ExpenseService {
 	
-	public List<Expense> getAllExpenses();
+	public Page<Expense> getAllExpenses(Pageable page);
 	
 	public Expense getExpenseById(Long id);
 	
