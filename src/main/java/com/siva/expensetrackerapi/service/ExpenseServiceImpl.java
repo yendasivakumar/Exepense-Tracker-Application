@@ -33,4 +33,16 @@ public class ExpenseServiceImpl implements ExpenseService{
 		 throw new RuntimeException("There are no expenses with this id :"+id);
 	}
 
+	@Override
+	public void deleteExpenseById(Long id) {
+		expenseRepo.deleteById(id);
+		
+	}
+
+	@Override
+	public Expense savaExpenseDetails(Expense expense) {
+		return expenseRepo.save(expense);
+		 
+	}
+
 }

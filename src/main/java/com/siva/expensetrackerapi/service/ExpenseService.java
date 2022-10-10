@@ -9,4 +9,8 @@ public interface ExpenseService {
 	public List<Expense> getAllExpenses();
 	
 	public Expense getExpenseById(Long id);
+	
+	public void deleteExpenseById(Long id);
+	
+	public Expense savaExpenseDetails(Expense expense);
 }
