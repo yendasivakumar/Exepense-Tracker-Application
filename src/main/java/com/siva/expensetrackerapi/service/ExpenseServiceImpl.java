@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.siva.expensetrackerapi.entity.Expense;
+import com.siva.expensetrackerapi.exceptions.ResourceNotFoundException;
 import com.siva.expensetrackerapi.repository.ExpenseRepository;
 
 @Service
@@ -27,13 +28,13 @@ public class ExpenseServiceImpl implements ExpenseService{
 	}
 
 	@Override
-	public Expense getExpenseById(Long id) {
+	public Expense getExpenseById(Long id) throws ResourceNotFoundException{
 		 Optional<Expense> optional =  expenseRepo.findById(id);
 		 if(optional.isPresent()) {
 			 return optional.get();
 		 }
 		 
-		 throw new RuntimeException("There are no expenses with this id :"+id);
+		 throw new ResourceNotFoundException("There are no expenses with this id :"+id);
 	}
 
 	@Override
