@@ -11,6 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -32,15 +36,20 @@ public class Expense {
 	private Long id;
 	
 	@Column(name="expense_name")
+	@NotBlank(message = "Expense name must be provided")
+	@Size(min=3,message = "Expense name must contain atleast three characters")
 	private String name;
 	
 	private String description;
 	
 	@Column(name="expense_amount")
+	@NotNull(message="Expense amount should not be null")
 	private BigDecimal amount;
 	
+	@NotBlank(message="Please mention expense categroy")
 	private String category;
 	
+	@NotNull(message="Please mention valid date")
 	private Date date;
 	
 	@Column(name="created_at",nullable = false,updatable = false)

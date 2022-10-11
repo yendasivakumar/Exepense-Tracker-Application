@@ -2,6 +2,8 @@ package com.siva.expensetrackerapi.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,15 +29,16 @@ public class ExpenseController {
 	
 	@GetMapping("/expenses")
 	public List<Expense> getAllExpenses(Pageable page) {
-		
+
 	 return expenseService.getAllExpenses(page).toList();
-		
 		
 	}
 	
 	@GetMapping("/expenses/{id}")
 	public Expense getExpenseId(@PathVariable Long id ) {
+		
 		Expense expense = expenseService.getExpenseById(id);
+		
 		return expense;
 		
 	}
@@ -43,17 +46,20 @@ public class ExpenseController {
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	@DeleteMapping("/expenses")
 	public void deleteExpenseById(@RequestParam Long id) {
+		
 		expenseService.deleteExpenseById(id);
 	}
 	
 	@ResponseStatus(value=HttpStatus.CREATED)
 	@PostMapping("/expenses")
-	public Expense saveExpense(@RequestBody Expense expense) {
+	public Expense saveExpense(@Valid @RequestBody Expense expense) {
+		
 		return expenseService.saveExpenseDetails(expense);
 	}
 	
 	@PutMapping("/expenses/{id}")
 	public Expense updateExpenseDetails(@RequestBody Expense expense,@PathVariable Long id) {
+		
 		return expenseService.updateExpenseDetails(id, expense);
 	}
 }
