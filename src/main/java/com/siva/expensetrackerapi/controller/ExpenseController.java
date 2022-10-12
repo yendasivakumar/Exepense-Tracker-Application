@@ -1,5 +1,6 @@
 package com.siva.expensetrackerapi.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -61,5 +62,23 @@ public class ExpenseController {
 	public Expense updateExpenseDetails(@RequestBody Expense expense,@PathVariable Long id) {
 		
 		return expenseService.updateExpenseDetails(id, expense);
+	}
+	
+	@GetMapping("/expenses/category")
+	public List<Expense> getExepensesByCategory(@RequestParam String category,Pageable page){
+		
+		return expenseService.readByCategory(category, page);
+	}
+	
+	@GetMapping("/expenses/name")
+	public List<Expense> getExpensesByName(@RequestParam String name,Pageable page){
+		return expenseService.readByName(name, page);
+	}
+	
+	@GetMapping("/expenses/dates")
+	public List<Expense> getExpensesByDates(@RequestParam(required = false) Date startDate,
+											@RequestParam(required = false) Date endDate,
+											Pageable page){
+		return expenseService.readByDate(startDate, endDate, page);
 	}
 }
