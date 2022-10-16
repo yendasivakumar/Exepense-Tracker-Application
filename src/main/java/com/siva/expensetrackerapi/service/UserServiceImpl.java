@@ -2,6 +2,7 @@ package com.siva.expensetrackerapi.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.siva.expensetrackerapi.entity.User;
@@ -15,6 +16,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	private PasswordEncoder bcryptPasswordEncoder;
 
 	@Override
 	public User createUser(UserModel user) {
@@ -22,6 +26,7 @@ public class UserServiceImpl implements UserService {
 			throw new ItemAlreadyExistsException("User Already Registered With This Email");
 		User newUser = new User();
 		BeanUtils.copyProperties(user, newUser);
+		newUser.setPassword(bcryptPasswordEncoder.encode(newUser.getPassword()));
 		
 		return userRepository.save(newUser);		
 	}
@@ -36,7 +41,7 @@ public class UserServiceImpl implements UserService {
 		User existingUser = readUser(id);
 		existingUser.setName(user.getName() != null ? user.getName() : existingUser.getName());
 		existingUser.setEmail(user.getEmail() != null ? user.getEmail() : existingUser.getEmail());
-		existingUser.setPassword(user.getPassword() != null ? user.getPassword() : existingUser.getPassword());
+		existingUser.setPassword(user.getPassword() != null ? bcryptPasswordEncoder.encode(user.getPassword()) : existingUser.getPassword());
 		existingUser.setAge(user.getAge() != null ? user.getAge() : existingUser.getAge());
 		return userRepository.save(existingUser);
 	}
