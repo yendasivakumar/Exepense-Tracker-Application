@@ -7,9 +7,11 @@ public interface UserService {
 	
 	public User createUser(UserModel user);
 	
-	public User readUser(Long id);
+	public User readUser();
 	
-	public User updateUser(UserModel user,Long id);
+	public User updateUser(UserModel user);
 	
-	public void deleteUser(Long id);
+	public void deleteUser();
+	
+	public User getLoggedInUser();
 }
